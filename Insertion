@@ -1,0 +1,95 @@
+INSERT INTO ACCOUNT VALUES
+('Thuan', 'Tran', 'AsianGuy', 'Asian@gmail.com', 'Password', 'Male'),
+('Michael', 'Smith', 'Mike', 'Michael@gmail.com', 'Password1', 'Male'),
+('John', 'Smith', 'John', 'Smith@gmail.com', 'Password2', 'Male'),
+('John', 'Smith', 'jsmith', 'jsmith12@yahoo.com', 'Password', 'Male'),
+('Emma', 'James', 'Emma123', 'emma_j@gmail.com', 'cat123', 'Female'),
+('Daniel', 'Jones', 'DJ', 'dan_jones01@gmail.com', 'keys11', 'Male'),
+('Joy', 'Philips', 'joy2', 'joyPhilips@gmail.com', 'pass2', 'Female'),
+('Billy', 'Agung Tjahjady', null, 'billyat8@uw.edu', 'definitelyasecret', 'Male'),
+('James', 'Bond', '007', 'jbond@uw.edu', 'someonewillhackme', 'Male'),
+('Nicki', 'Minaj', null, 'nickim@uw.edu', 'hehexd', 'Female'),
+('Taylor', 'Fast', null, 'taylors@uw.edu', 'swiftie', 'Female');
+
+INSERT INTO FRIEND VALUES
+('Asian@gmail.com', 'Michael@gmail.com'),
+('Michael@gmail.com', 'Smith@gmail.com'),
+('Smith@gmail.com', 'Asian@gmail.com'),
+('jsmith12@yahoo.com', 'emma_j@gmail.com'),
+('jsmith12@yahoo.com', 'dan_jones01@gmail.com'),
+('emma_j@gmail.com', 'dan_jones01@gmail.com'),
+('joyPhilips@gmail.com', 'jsmith12@yahoo.com'),
+('billyat8@uw.edu', 'jbond@uw.edu'),
+('nickim@uw.edu', 'jbond@uw.edu'),
+('billyat8@uw.edu', 'nickim@uw.edu'),
+('taylors@uw.edu', 'billyat8@uw.edu'),
+('taylors@uw.edu', 'jbond@uw.edu');
+
+INSERT INTO POST VALUES
+(10, 'Today is a wonderful day', '2017-03-02', '13:00:00', 'Asian@gmail.com'),
+(11, 'Time to browse 9Gag', '2017-02-28', '23:59:59', 'Smith@gmail.com'),
+(12, 'Time to get a Nintendo Switch', '2017-03-03', '00:00:01', 'Michael@gmail.com'),
+(15, 'Got a new phone today!', '2010-07-16', '12:07:05', 'jsmith12@yahoo.com'),
+(16, 'Overslept today. Miss my bus...', '2015-03-27', '08:30:18', 'dan_jones01@gmail.com'),
+(20, 'Oh God, I *love* cats!', '2017-03-01', '16:20:00', 'nickim@uw.edu');
+
+INSERT INTO MEDIA VALUES 
+('Image', 'Sunny day', 10, 'Sunny.jpg'),
+('Image', 'Sunny day', 11, 'Selfie.jpg'),
+('Video', 'Hands on the Switch', 12, 'NintendoSwitch.mp4'),
+('Image', 'New phone!', 15, 'iphone.jpg'),
+('Image', 'No bus & now raining :(', 16, 'busstop.jpg'),
+('Image', 'Oh God, I *love* cats!', 20, 'cat.jpg');
+
+INSERT INTO REACTION VALUES
+('Smile'),
+('Sad'),
+('Excited'),
+('Angry'),
+('Dislike'),
+('Like'),
+('Love'),
+('Surprised');
+
+INSERT INTO POST_REACTION VALUES
+('Smith@gmail.com', 10, 'Smile'),
+('Smith@gmail.com', 12, 'Excited'),
+('Michael@gmail.com', 11, 'Sad'),
+('emma_j@gmail.com', 15, 'Love'),
+('jsmith12@yahoo.com', 16, 'Sad'),
+('billyat8@uw.edu', 20, 'Love');
+
+
+INSERT INTO POST_COMMENT VALUES
+(11, '05:06:30', '2017-03-08', 'Nice one', 'Asian@gmail.com'),
+(12, '05:15:38', '2017-03-08', 'Good Job', 'Smith@gmail.com'),
+(12, '05:15:30', '2017-03-08', 'Good Job', 'Asian@gmail.com'),
+(15, '14:25:49', '2010-07-16', 'That is awesome!', 'emma_j@gmail.com'),
+(15, '13:07:46', '2010-07-16', 'Did you change your number?', 'joyPhilips@gmail.com'),
+(15, '16:15:59', '2010-07-16', 'Thanks, currently learning how to use it', 'jsmith12@yahoo.com'),
+(16, '09:30:05', '2015-03-27', 'That sucks, man. Stay dry!', 'jsmith12@yahoo.com'),
+(20, '16:21:00', '2017-03-01', 'same', 'billyat8@uw.edu'),
+(20, '17:01:29', '2017-03-01', 'nice. they are cute indeed', 'jbond@uw.edu'),
+(20, '17:02:49', '2017-03-01', 'OMG THEIR SO CUTE!!', 'taylors@uw.edu');
+
+INSERT INTO MESSAGE_THREAD VALUES 
+(10, 'Asian@gmail.com', '2017-05-03', '03:05:08'),
+(11, 'Michael@gmail.com', '2010-07-16', '01:00:00'),
+(15, 'jsmith12@yahoo.com', '2017-05-03', '06:15:08'),
+(20, 'taylors@uw.edu', '2017-05-13', '03:05:00');
+
+INSERT INTO THREAD_PARTICIPANT VALUES
+(10, 'Michael@gmail.com'),
+(10, 'Smith@gmail.com'),
+(11, 'Asian@gmail.com'),
+(15, 'dan_jones01@gmail.com'),
+(15, 'jbond@uw.edu'),
+(20, 'emma_j@gmail.com'),
+(20, 'jbond@uw.edu'),
+(20, 'Michael@gmail.com');
+
+INSERT INTO MESSAGE VALUES
+(10, 'Michael@gmail.com', '2017-05-03', '03:05:08', 'Hey'),
+(11, 'Asian@gmail.com', '2017-05-03', '03:05:10', 'Dude'),
+(10, 'Smith@gmail.com', '2017-05-03', '03:05:09', 'Hey');
+
