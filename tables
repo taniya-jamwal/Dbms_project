@@ -1,0 +1,225 @@
++---------------------------------+
+| Tables_in_social_media_analysis |
++---------------------------------+
+| account                         |
+| friend                          |
+| media                           |
+| message                         |
+| message_thread                  |
+| post                            |
+| post_comment                    |
+| post_reaction                   |
+| reaction                        |
+| thread_participant              |
++---------------------------------+
+
+1)  CREATE TABLE ACCOUNT (
+    Firstname VARCHAR(40) NOT NULL,
+    Lastname VARCHAR(40) NOT NULL,
+    Nickname VARCHAR(40),
+    Email VARCHAR(40) NOT NULL,
+    Password VARCHAR(40) NOT NULL,
+    Gender VARCHAR(10) NOT NULL,
+    PRIMARY KEY (Email),
+    CONSTRAINT CHK_Gender CHECK (Gender IN ('Male', 'Female', 'Other', 'No Answer'))
+);
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Firstname | varchar(40) | NO   |     | NULL    |       |
+| Lastname  | varchar(40) | NO   |     | NULL    |       |
+| Nickname  | varchar(40) | YES  |     | NULL    |       |
+| Email     | varchar(40) | NO   | PRI | NULL    |       |
+| Password  | varchar(40) | NO   |     | NULL    |       |
+| Gender    | varchar(10) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+
+2) CREATE TABLE FRIEND (
+    UserEmail VARCHAR(40) NOT NULL,
+    FriendEmail VARCHAR(40) NOT NULL,
+    PRIMARY KEY(UserEmail, FriendEmail),
+    FOREIGN KEY (UserEmail) REFERENCES ACCOUNT(Email) ON UPDATE NO ACTION ON DELETE NO ACTION,
+    FOREIGN KEY (FriendEmail) REFERENCES ACCOUNT(Email) ON UPDATE NO ACTION ON DELETE NO ACTION
+);
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| UserEmail   | varchar(40) | NO   | PRI | NULL    |       |
+| FriendEmail | varchar(40) | NO   | PRI | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+
+
+3)
+CREATE TABLE POST (
+    PostID INT NOT NULL,
+    Content VARCHAR(120) NOT NULL,
+    PostDate DATE NOT NULL,
+    PostTime TIME NOT NULL,
+    UserEmail VARCHAR(40) NOT NULL,
+    PRIMARY KEY(PostID),
+    FOREIGN KEY(UserEmail) REFERENCES ACCOUNT(Email) ON UPDATE CASCADE ON DELETE CASCADE
+);
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| PostID    | int          | NO   | PRI | NULL    |       |
+| Content   | varchar(120) | NO   |     | NULL    |       |
+| PostDate  | date         | NO   |     | NULL    |       |
+| PostTime  | time         | NO   |     | NULL    |       |
+| UserEmail | varchar(40)  | NO   | MUL | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+
+
+
+
+
+
+4)CREATE TABLE MEDIA (
+    Type VARCHAR(40) NOT NULL,
+    Caption VARCHAR(120) NOT NULL,
+    PostID INT NOT NULL,
+    FileName VARCHAR(40) NOT NULL,
+    PRIMARY KEY(PostID, Caption),
+    FOREIGN KEY (PostID) REFERENCES POST(PostID) ON UPDATE CASCADE ON DELETE CASCADE
+);
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| Type     | varchar(40)  | NO   |     | NULL    |       |
+| Caption  | varchar(120) | NO   | PRI | NULL    |       |
+| PostID   | int          | NO   | PRI | NULL    |       |
+| FileName | varchar(40)  | NO   |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+
+
+
+
+
+5) CREATE TABLE REACTION (
+    Type VARCHAR(40) NOT NULL,
+    PRIMARY KEY(Type)
+);
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Type  | varchar(40) | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+
+
+
+
+6) CREATE TABLE POST_REACTION (
+    UserEmail VARCHAR(40) NOT NULL,
+    PostID INT NOT NULL,
+    ReactionType VARCHAR(40) NOT NULL,
+    PRIMARY KEY(UserEmail, PostID),
+    FOREIGN KEY(UserEmail) REFERENCES ACCOUNT(Email) ON UPDATE NO ACTION ON DELETE NO ACTION,
+    FOREIGN KEY(PostID) REFERENCES POST(PostID) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(ReactionType) REFERENCES REACTION(Type) ON UPDATE CASCADE ON DELETE CASCADE
+);
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| UserEmail    | varchar(40) | NO   | PRI | NULL    |       |
+| PostID       | int         | NO   | PRI | NULL    |       |
+| ReactionType | varchar(40) | NO   | MUL | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+
+
+
+
+7) CREATE TABLE POST_COMMENT (
+    PostID INT NOT NULL,
+    CommentTime TIME NOT NULL,
+    CommentDate DATE NOT NULL,
+    Content VARCHAR(40) NOT NULL,
+    UserEmail VARCHAR(40) NOT NULL,
+    PRIMARY KEY(PostID, CommentTime, CommentDate, UserEmail),
+    FOREIGN KEY (PostID) REFERENCES POST(PostID) ON UPDATE NO ACTION ON DELETE NO ACTION,
+    FOREIGN KEY(UserEmail) REFERENCES ACCOUNT(Email) ON UPDATE NO ACTION ON DELETE NO ACTION
+);
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| PostID      | int         | NO   | PRI | NULL    |       |
+| CommentTime | time        | NO   | PRI | NULL    |       |
+| CommentDate | date        | NO   | PRI | NULL    |       |
+| Content     | varchar(40) | NO   |     | NULL    |       |
+| UserEmail   | varchar(40) | NO   | PRI | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+
+
+
+
+
+
+
+
+8) CREATE TABLE MESSAGE_THREAD (
+    ThreadID INT AUTO_INCREMENT,
+    OwnerEmail VARCHAR(40) NOT NULL,
+    ThDate DATE NOT NULL,
+    ThTime TIME NOT NULL,
+    PRIMARY KEY(ThreadID),
+    FOREIGN KEY(OwnerEmail) REFERENCES ACCOUNT(Email) ON UPDATE CASCADE ON DELETE CASCADE
+);
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| ThreadID   | int         | NO   | PRI | NULL    | auto_increment |
+| OwnerEmail | varchar(40) | NO   | MUL | NULL    |                |
+| ThDate     | date        | NO   |     | NULL    |                |
+| ThTime     | time        | NO   |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9) CREATE TABLE THREAD_PARTICIPANT (
+    ThreadID INT NOT NULL,
+    UserEmail VARCHAR(40) NOT NULL,
+    PRIMARY KEY(ThreadID, UserEmail),
+    FOREIGN KEY(ThreadID) REFERENCES MESSAGE_THREAD(ThreadID) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(UserEmail) REFERENCES ACCOUNT(Email) ON UPDATE NO ACTION ON DELETE NO ACTION
+);
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| ThreadID  | int         | NO   | PRI | NULL    |       |
+| UserEmail | varchar(40) | NO   | PRI | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+
+
+
+
+
+10) CREATE TABLE MESSAGE (
+    ThreadID INT NOT NULL,
+    Sender VARCHAR(40) NOT NULL,
+    MsgDate DATE NOT NULL,
+    MsgTime TIME NOT NULL,
+    Content VARCHAR(120) NOT NULL,
+    PRIMARY KEY(ThreadID, Sender, MsgDate, MsgTime),
+    FOREIGN KEY(ThreadID) REFERENCES MESSAGE_THREAD(ThreadID) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY(Sender) REFERENCES ACCOUNT(Email) ON UPDATE NO ACTION ON DELETE NO ACTION
+);
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| ThreadID | int          | NO   | PRI | NULL    |       |
+| Sender   | varchar(40)  | NO   | PRI | NULL    |       |
+| MsgDate  | date         | NO   | PRI | NULL    |       |
+| MsgTime  | time         | NO   | PRI | NULL    |       |
+| Content  | varchar(120) | NO   |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
